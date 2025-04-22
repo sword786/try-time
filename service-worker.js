@@ -3,7 +3,7 @@ const urlsToCache = [
   './index.html',
   './manifest.json',
   './icon.png',
-  './mixkit-digital-clock-digital-alarm-buzzer-992.mp3'
+  './hanna.mp3'
 ];
 
 self.addEventListener("install", event => {
