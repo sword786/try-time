@@ -13,7 +13,8 @@
 </head>
 <body>
   <h1>Weekly Timetable Alarm</h1>
-
+<button onclick="testAlarm()">🔔 Test Alarm</button>
+  
   <table id="timetable">
     <thead>
       <tr><th>Day</th><th>Time</th><th>Class</th></tr>
@@ -32,7 +33,7 @@
       { day: "Tuesday", time: "09:45", name: "Ma'ni P2" },
       { day: "Tuesday", time: "11:25", name: "IT D1" },
       { day: "Tuesday", time: "12:10", name: "Ma'ni D1" },
-      { day: "Tuesday", time: "18:53", name: "LSRW" },
+      { day: "Tuesday", time: "14:00", name: "LSRW" },
       { day: "Wednesday", time: "09:00", name: "TFS D1" },
       { day: "Wednesday", time: "09:45", name: "Urdu P2" },
       { day: "Wednesday", time: "10:40", name: "NAHV D3" },
@@ -63,6 +64,12 @@
         row.innerHTML = `<td>${slot.day}</td><td>${slot.time}</td><td>${slot.name}</td>`;
         tbody.appendChild(row);
       });
+    }
+    
+    function testAlarm() {
+       alert("🔔 Testing alarm...");
+       alarmAudio.play();
+       showNotification("Test Alarm", "This is how your class reminder will appear.");
     }
 
     function checkAndRing() {
