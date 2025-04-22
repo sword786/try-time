@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Timetable Alarm</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.png" type="image/png" />
+  <meta name="theme-color" content="#317EFB"/>
+</head>
+<body>
+  <h1>Weekly Timetable Alarm</h1>
+  <p>This PWA will notify and play sound based on your schedule.</p>
+
+  <script>
+    const timetable = [
+      { day: "Monday", time: "09:00", name: "Ma'ni P2" },
+      { day: "Monday", time: "09:45", name: "IT P1" },
+      { day: "Monday", time: "10:40", name: "TFS D1" },
+      { day: "Monday", time: "12:10", name: "IT D3" },
+      { day: "Monday", time: "15:00", name: "LSRW" },
+
+      { day: "Tuesday", time: "06:45", name: "Doura P1" },
+      { day: "Tuesday", time: "09:45", name: "Ma'ni P2" },
+      { day: "Tuesday", time: "11:25", name: "IT D1" },
+      { day: "Tuesday", time: "12:10", name: "Ma'ni D1" },
+      { day: "Tuesday", time: "14:00", name: "LSRW" },
+
+      { day: "Wednesday", time: "09:00", name: "TFS D1" },
+      { day: "Wednesday", time: "09:45", name: "Urdu P2" },
+      { day: "Wednesday", time: "10:40", name: "NAHV D3" },
+      { day: "Wednesday", time: "12:10", name: "IT P1" },
+      { day: "Wednesday", time: "15:00", name: "LSRW" },
+
+      { day: "Thursday", time: "09:00", name: "NAHV D3" },
+      { day: "Thursday", time: "10:40", name: "Urdu P2" },
+      { day: "Thursday", time: "11:25", name: "IT 8" },
+      { day: "Thursday", time: "12:10", name: "IT P2" },
+
+      { day: "Saturday", time: "09:45", name: "IT D1" },
+      { day: "Saturday", time: "10:40", name: "NAHV D3" },
+      { day: "Saturday", time: "12:10", name: "Urdu P2" },
+      { day: "Saturday", time: "14:00", name: "LSRW" },
+      { day: "Saturday", time: "15:00", name: "LSRW" },
+
+      { day: "Sunday", time: "07:45", name: "Urdu P2" },
+      { day: "Sunday", time: "09:45", name: "NAHV D3" },
+      { day: "Sunday", time: "10:40", name: "Ma'ni P2" },
+      { day: "Sunday", time: "11:25", name: "IT D3" },
+      { day: "Sunday", time: "12:10", name: "IT P2" }
+    ];
+
+    const alarmAudio = new Audio('mixkit-digital-clock-digital-alarm-buzzer-992.mp3');
+
+    function checkAndRing() {
+      const now = new Date();
+      const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const currentTime = now.toTimeString().slice(0, 5);
+
+      timetable.forEach(slot => {
+        if (slot.day === currentDay && slot.time === currentTime) {
+          alarmAudio.play();
+          showNotification(slot.name, `It's ${slot.time} on ${slot.day}`);
+        }
+      });
+    }
+
+    function showNotification(title, body) {
+      if (Notification.permission === 'granted') {
+        new Notification(title, { body });
+      }
+    }
+
+    if ('Notification' in window && Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+
+    setInterval(checkAndRing, 60000); // check every minute
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker registered', reg))
+        .catch(err => console.error('Service Worker registration failed', err));
+    }
+  </script>
+</body>
+</html>
