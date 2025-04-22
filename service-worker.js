@@ -1,9 +1,9 @@
 const CACHE_NAME = "timetable-cache-v1";
 const urlsToCache = [
-  "index.html",
-  "manifest.json",
-  "icon.png",
-  "mixkit-digital-clock-digital-alarm-buzzer-992.mp3"
+  './index.html',
+  './manifest.json',
+  './icon.png',
+  './mixkit-digital-clock-digital-alarm-buzzer-992.mp3'
 ];
 
 self.addEventListener("install", event => {
